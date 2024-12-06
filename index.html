@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta name="robots" content="none">
+	<title>Generate URL</title>
+	<style>
+		/* RESET */
+		* {margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; box-sizing: border-box;} *, ::before, ::after {box-sizing: border-box;} article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;} body {line-height: 1;} a {text-decoration:none;} ol, ul {list-style: none;} *:active, *:focus {border: none; outline: none;} strong {font-weight: bold;} em {font-style: italic;}
+		/* RESET */
+
+		body {
+			font-family: sans-serif;
+		}
+		.modal {
+			width: 100%;
+			height: 0;
+			position: relative;
+			top: 0;
+			left: 0;
+			z-index: 10;
+			background-color: rgba(0, 0, 0, 0.8);
+			transition: height 0.3s ease;
+		}
+		.modal.active {
+			height: 100%;
+			padding: 20px 15px;
+			margin-bottom: 15px;
+		}
+		.modal p {
+			margin: 0 auto 20px;
+			display: block;
+			font-size: 18px;
+			color: #ffffff;
+			text-align: center;
+		}
+		.modal .wrapperSvg {
+			width: 25px;
+			margin: 0 auto;
+			display: block;
+		}
+		.modal .wrapperSvg span {
+			width: max-content;
+			height: auto;
+			display: block;
+			margin-top: 10px;
+			position: relative;
+			left: 50%;
+			transform: translateX(-50%);
+			color: #ffffff;
+			white-space: nowrap;
+		}
+		.modal .wrapperSvg:hover {
+			cursor: pointer;
+		}
+		.modal svg {
+			width: 100%;
+			height: 100%;
+		}
+		form {
+			padding: 80px 15px 20px;
+			position: relative;
+		}
+		.form-group {
+			margin-right: 25px;
+			margin-bottom: 40px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.form-group .category-title {
+			margin-bottom: 15px;
+			display: block;
+			font-weight: bold;
+		}
+		.form-group label {
+			display: block;
+		}
+		.form-group label + label {
+			margin-top: 10px;
+		}
+		input[type="checkbox"] {
+			margin-right: 5px;
+		}
+		input[type="submit"] {
+			padding: 10px 15px;
+			position: sticky;
+			top: 15px;
+			right: 15px;
+			float: right;
+			background-color: #d2d2d2;
+			border: 2px solid #878787;
+			border-radius: 6px;
+			color: #000000;
+			font-size: 20px;
+			transition: all 0.3s ease;
+			z-index: 3;
+			cursor: pointer;
+		}
+		.resetFilters {
+			width: max-content;
+			padding: 5px 10px;
+			position: fixed;
+			right: 15px;
+			bottom: 15px;
+			font-size: 14px;
+			color: #ffffff;
+			z-index: 3;
+			background-color: #878787;
+			border-radius: 6px;
+		}
+
+		@media (max-width: 768px) {
+			.form-group {
+				margin-right: 40px;
+			}
+			.form-group label + label {
+				margin-top: 15px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="modal"></div>
+	<input type="submit" value="Generate">
+	<form action="">
+		<div id="brand" class="form-group">
+			<p class="category-title">Brand</p>
+			<label>
+				<input type="checkbox" name="brand" value="apple">
+				Apple
+			</label>
+			<label>
+				<input type="checkbox" name="brand" value="samsung">
+				Samsung
+			</label>
+			<label>
+				<input type="checkbox" name="brand" value="sony">
+				Sony
+			</label>
+		</div>
+		<div id="screenSize" class="form-group">
+			<p class="category-title">Screen Size</p>
+			<label>
+				<input type="checkbox" name="screenSize" value="13">
+				13 inches
+			</label>
+			<label>
+				<input type="checkbox" name="screenSize" value="15">
+				15 inches
+			</label>
+			<label>
+				<input type="checkbox" name="screenSize" value="17">
+				17 inches
+			</label>
+		</div>
+	</form>
+	<a class="resetFilters" href="#this">reset all</a>
+</body>
+</html>
