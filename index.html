@@ -156,5 +156,27 @@
 		</div>
 	</form>
 	<a class="resetFilters" href="#this">reset all</a>
+
+	<script>
+		const modal = document.querySelector('.modal');
+		const inputSubmit = document.querySelector('input[type="submit"]');
+		const form = document.querySelector('form');
+		const resetFilters = document.querySelector('.resetFilters');
+
+		const validateForm = () => {
+			const brand = document.querySelectorAll('input[name="brand"]:checked');
+			const screenSize = document.querySelectorAll('input[name="screenSize"]:checked');
+
+			if (brand.length > 0 || screenSize.length > 0) {
+				inputSubmit.disabled = false;
+				return true;
+			} else {
+				inputSubmit.disabled = true;
+				return false;
+			}
+		}
+
+
+	</script>
 </body>
 </html>
