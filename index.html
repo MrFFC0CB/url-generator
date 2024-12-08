@@ -35,12 +35,12 @@
 			color: #ffffff;
 			text-align: center;
 		}
-		.modal .wrapperSvg {
+		.modal .wrapper-svg {
 			width: 25px;
 			margin: 0 auto;
 			display: block;
 		}
-		.modal .wrapperSvg span {
+		.modal .wrapper-svg span {
 			width: max-content;
 			height: auto;
 			display: block;
@@ -51,38 +51,38 @@
 			color: #ffffff;
 			white-space: nowrap;
 		}
-		.modal .wrapperSvg:hover {
+		.modal .wrapper-svg:hover {
 			cursor: pointer;
 		}
 		.modal svg {
 			width: 100%;
 			height: 100%;
 		}
-		form {
+		#wrapper-options {
 			padding: 80px 15px 20px;
 			position: relative;
 		}
-		.form-group {
+		.options-group {
 			margin-right: 25px;
 			margin-bottom: 40px;
 			display: inline-block;
 			vertical-align: top;
 		}
-		.form-group .category-title {
+		.options-group .category-title {
 			margin-bottom: 15px;
 			display: block;
 			font-weight: bold;
 		}
-		.form-group label {
+		.options-group label {
 			display: block;
 		}
-		.form-group label + label {
+		.options-group label + label {
 			margin-top: 10px;
 		}
 		input[type="checkbox"] {
 			margin-right: 5px;
 		}
-		input[type="submit"] {
+		#btn-generate {
 			padding: 10px 15px;
 			position: sticky;
 			top: 15px;
@@ -97,7 +97,7 @@
 			z-index: 3;
 			cursor: pointer;
 		}
-		.resetFilters {
+		.reset-filters {
 			width: max-content;
 			padding: 5px 10px;
 			position: fixed;
@@ -111,10 +111,10 @@
 		}
 
 		@media (max-width: 768px) {
-			.form-group {
+			.options-group {
 				margin-right: 40px;
 			}
-			.form-group label + label {
+			.options-group label + label {
 				margin-top: 15px;
 			}
 		}
@@ -122,9 +122,9 @@
 </head>
 <body>
 	<div class="modal"></div>
-	<input type="submit" value="Generate">
-	<form action="">
-		<div id="brand" class="form-group">
+	<button id="btn-generate">Generate</button>
+	<div id="wrapper-options">
+		<div id="brand" class="options-group">
 			<p class="category-title">Brand</p>
 			<label>
 				<input type="checkbox" name="brand" value="apple">
@@ -139,44 +139,54 @@
 				Sony
 			</label>
 		</div>
-		<div id="screenSize" class="form-group">
+		<div id="screen-size" class="options-group">
 			<p class="category-title">Screen Size</p>
 			<label>
-				<input type="checkbox" name="screenSize" value="13">
+				<input type="checkbox" name="screen-size" value="13">
 				13 inches
 			</label>
 			<label>
-				<input type="checkbox" name="screenSize" value="15">
+				<input type="checkbox" name="screen-size" value="15">
 				15 inches
 			</label>
 			<label>
-				<input type="checkbox" name="screenSize" value="17">
+				<input type="checkbox" name="screen-size" value="17">
 				17 inches
 			</label>
 		</div>
-	</form>
-	<a class="resetFilters" href="#this">reset all</a>
+	</div>
+	<a class="reset-filters" href="#this">reset all</a>
 
 	<script>
 		const modal = document.querySelector('.modal');
-		const inputSubmit = document.querySelector('input[type="submit"]');
-		const form = document.querySelector('form');
-		const resetFilters = document.querySelector('.resetFilters');
+		const btnGenerate = document.querySelector('#btn-generate');
+		const resetFilters = document.querySelector('.reset-filters');
 
 		const validateForm = () => {
-			const brand = document.querySelectorAll('input[name="brand"]:checked');
-			const screenSize = document.querySelectorAll('input[name="screenSize"]:checked');
+			const options = document.querySelectorAll('#wrapper-options input:checked');
 
-			if (brand.length > 0 || screenSize.length > 0) {
-				inputSubmit.disabled = false;
+			if (options.length > 0) {
+				console.log('Form is valid');
 				return true;
 			} else {
-				inputSubmit.disabled = true;
+				console.log('Form is NOT valid');
 				return false;
 			}
 		}
+		const generateLink = () => {
+			alert('Link generated!');
+		};
 
+		btnGenerate.addEventListener('click', (e) => {
+			e.preventDefault();
+			const isFormValid = validateForm();
 
+			if (!isFormValid) {
+				alert('Select one or more options.');
+			} else {
+				generateLink();
+			}
+		});
 	</script>
 </body>
 </html>
