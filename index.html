@@ -13,50 +13,52 @@
 		body {
 			font-family: sans-serif;
 		}
-		.modal {
+		#modal-results {
 			width: 100%;
 			height: 0;
 			position: relative;
 			top: 0;
 			left: 0;
 			z-index: 10;
+			overflow: hidden;
 			background-color: rgba(0, 0, 0, 0.8);
 			transition: height 0.3s ease;
 		}
-		.modal.active {
+		#modal-results.active {
 			height: 100%;
 			padding: 20px 15px;
 			margin-bottom: 15px;
 		}
-		.modal p {
+		#modal-results p {
 			margin: 0 auto 20px;
 			display: block;
 			font-size: 18px;
 			color: #ffffff;
 			text-align: center;
 		}
-		.modal .wrapper-svg {
-			width: 25px;
+		#modal-results #btn-copy-link {
 			margin: 0 auto;
-			display: block;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			row-gap: 10px;
+			cursor: pointer;
+			border: none;
+			background-color: transparent;
 		}
-		.modal .wrapper-svg span {
+		#modal-results #btn-copy-link > * {
+			pointer-events: none;
+		}
+		#modal-results #btn-copy-link svg {
+			width: 25px;
+			height: auto;
+		}
+		#modal-results #btn-copy-link span {
 			width: max-content;
 			height: auto;
 			display: block;
-			margin-top: 10px;
-			position: relative;
-			left: 50%;
-			transform: translateX(-50%);
 			color: #ffffff;
 			white-space: nowrap;
-		}
-		.modal .wrapper-svg:hover {
-			cursor: pointer;
-		}
-		.modal svg {
-			width: 100%;
-			height: 100%;
 		}
 		#wrapper-options {
 			padding: 80px 15px 20px;
@@ -97,7 +99,7 @@
 			z-index: 3;
 			cursor: pointer;
 		}
-		.reset-filters {
+		#btn-reset-filters {
 			width: max-content;
 			padding: 5px 10px;
 			position: fixed;
@@ -121,8 +123,16 @@
 	</style>
 </head>
 <body>
-	<div class="modal"></div>
+	<div id="modal-results">
+		<p></p>
+		<button id="btn-copy-link">
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.007 512.007" style="enable-background:new 0 0 512.007 512.007;" xml:space="preserve"><g><g><path fill="#fff" d="M507.733,196.27h-153.6c-2.355,0-4.267-1.911-4.267-4.267v-128c0-2.355-1.911-4.267-4.267-4.267H140.809 c-2.355,0-4.267,1.911-4.267,4.275l0.597,443.733c0,2.355,1.911,4.258,4.267,4.258h366.327c2.355,0,4.267-1.911,4.267-4.267 v-307.2C512,198.181,510.089,196.27,507.733,196.27z"/></g></g><g><g><path fill="#fff" d="M294.4,0.003H4.267C1.911,0.003,0,1.915,0,4.27v435.2c0,2.355,1.911,4.267,4.267,4.267H115.2 c2.355,0,4.267-1.911,4.267-4.267V46.937c0-2.355,1.911-4.267,4.267-4.267H294.4c2.355,0,4.267-1.911,4.267-4.267V4.27 C298.667,1.915,296.755,0.003,294.4,0.003z"/></g></g><g><g><path fill="#fff" d="M510.353,171.327L374.298,60.761c-2.935-2.389-7.364-0.324-7.364,3.43v110.566c0,2.458,2.014,4.446,4.506,4.446h136.055 C511.718,179.203,513.621,173.981,510.353,171.327z"/></g></g></svg>
+			<span>copy to clipboard</span>
+		</button>
+	</div>
+
 	<button id="btn-generate">Generate</button>
+
 	<div id="wrapper-options">
 		<div id="brand" class="options-group">
 			<p class="category-title">Brand</p>
@@ -154,13 +164,29 @@
 				17 inches
 			</label>
 		</div>
+		<div id="color" class="options-group">
+			<p class="category-title">Color</p>
+			<label>
+				<input type="checkbox" name="color" value="red">
+				red
+			</label>
+			<label>
+				<input type="checkbox" name="color" value="green">
+				green
+			</label>
+			<label>
+				<input type="checkbox" name="color" value="blue">
+				blue
+			</label>
+		</div>
 	</div>
-	<a class="reset-filters" href="#this">reset all</a>
+	<a id="btn-reset-filters" href="#this">reset all</a>
 
 	<script>
-		const modal = document.querySelector('.modal');
+		const modal = document.querySelector('#modal-results');
 		const btnGenerate = document.querySelector('#btn-generate');
-		const resetFilters = document.querySelector('.reset-filters');
+		const btnResetFilters = document.querySelector('#btn-reset-filters');
+		const btnCopyLink = document.querySelector('#btn-copy-link');
 
 		const validateForm = () => {
 			const options = document.querySelectorAll('#wrapper-options input:checked');
@@ -174,7 +200,44 @@
 			}
 		}
 		const generateLink = () => {
-			alert('Link generated!');
+			const categories = document.querySelectorAll('#wrapper-options .options-group');
+			const url = `https://domain.com/products/?view_type=list`;
+			let response = url;
+
+			categories.forEach((category) => {
+				const categoryOptions = category.querySelectorAll('input:checked');
+
+				if (categoryOptions.length > 0) {
+					response += `&${categoryOptions[0].name}=`;
+
+					categoryOptions.forEach((input, index) => {
+						response += `${input.value}`;
+						if (index < categoryOptions.length - 1) response += `,`;
+					});
+				}
+			});
+
+			modal.querySelector('p').innerHTML = response;
+			modal.classList.add('active');
+		};
+		const copyToClipboard = ()=>{
+			const elm = modal.querySelector('p');
+
+			navigator.clipboard.writeText(elm.innerText).then(function() {
+				modal.querySelector('span').innerHTML = 'copied!';
+			}, function() {
+				alert('Failed to copy.');
+			});
+		};
+		const resetAll = ()=>{
+			modal.classList.remove('active');
+			modal.querySelector('p').innerHTML = '';
+			modal.querySelector('span').innerHTML = 'copy to clipboard';
+
+			const options = document.querySelectorAll('#wrapper-options input:checked');
+			options.forEach((option) => {
+				option.checked = false;
+			});
 		};
 
 		btnGenerate.addEventListener('click', (e) => {
@@ -186,6 +249,16 @@
 			} else {
 				generateLink();
 			}
+		});
+		btnCopyLink.addEventListener('click', (e) => {
+			e.preventDefault();
+			
+			copyToClipboard();
+		});
+		btnResetFilters.addEventListener('click', (e) => {
+			e.preventDefault();
+			
+			resetAll();
 		});
 	</script>
 </body>
