@@ -20,6 +20,8 @@ Then, the idea of having some kind of template for a situation like that became 
 
 Replace `yourCategory` with your actual category name and `yourValue` with your option value and name.
 
-2- Send the url-generator.html file to the client or upload it to a server. Open it on a browser and start generating!
+2- Change ``const url = `https://domain.com/products/?view_type=list`;`` with your url.
+
+3- Send the url-generator.html file to the client or upload it to a server. Open it on a browser and start generating!
 
 **Note**: Feel free to change the url-generator.html file name.
