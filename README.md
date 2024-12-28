@@ -8,9 +8,9 @@ Then, the idea of having some kind of template for a situation like that became 
 ## Instructions
 1- Open **url-generator.html** file on a code/text editor.
 
-2- Add your filters inside ``#wrapper-options`` (line 137) using the following structure:
+2- Add your filters inside `#wrapper-options` (line 137) using the following structure:
 
-```
+```html
 <div id="yourCategory" class="options-group">
 	<p class="category-title">yourCategory</p>
 	<label>
@@ -22,13 +22,13 @@ Then, the idea of having some kind of template for a situation like that became 
 
 Replace `yourCategory` with your actual category name and `yourValue` with your option value and name.
 
-3- In the ``generateLink`` function, change the ``url`` variable (line 164) with your actual URL. You can use a URL with predefined parameters; for example:
+3- In the `generateLink` function, change the `url` variable (line 164) with your actual URL. You can use a URL with predefined parameters; for example:
 	
-``https://domain.com/products/?view_type=list``
+`https://domain.com/products/?view_type=list`
 
 The result will be something like this:
 
-``https://domain.com/products/?view_type=list&foo=true&bar=red``
+`https://domain.com/products/?view_type=list&foo=true&bar=red`
 
 4- Send the **url-generator.html** file to the client or upload it to a server. Open it on a browser and start generating!
 
